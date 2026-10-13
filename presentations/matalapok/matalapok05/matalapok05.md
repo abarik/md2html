@@ -43,7 +43,7 @@ window.Plot = {
 
 # Véletlen jelenségek és események
 
-## Determinisztikus és véletlen jelenségek
+## Determinisztikus és véletlen jelenségek {.smaller}
 
 :::: {.columns}
 ::: {.column}
@@ -61,8 +61,7 @@ A kimenetel lényegében azonos körülmények között sem egyértelmű.
 :::
 ::::
 
-- **Véletlen tömegjelenség:** ugyanolyan formában igen sokszor megismételhető véletlen jelenség
-- A **valószínűség-számítás** a véletlen tömegjelenségek törvényszerűségeit vizsgálja
+A **valószínűség-számítás** a **véletlen tömegjelenségek** – sokszor megismételhető véletlen jelenségek – törvényszerűségeit vizsgálja.
 
 ## Kísérlet, elemi esemény, eseménytér
 
@@ -575,7 +574,7 @@ $$P(A \cap B) = P(A \mid B)\,P(B)$$
 
 Több eseményre (láncszabály):
 
-$$P(A_1 \cap A_2 \cap \ldots \cap A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap \ldots \cap A_{n-1})$$
+$$P(A_1 \cap \ldots \cap A_n) = P(A_1)\,P(A_2 \mid A_1) \cdots P(A_n \mid A_1 \cap \ldots \cap A_{n-1})$$
 
 ::: {.callout-note}
 ## Példa: golyók visszatevés nélkül

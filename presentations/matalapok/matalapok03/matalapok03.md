@@ -43,7 +43,7 @@ window.Plot = {
 ::: {.column width="56%"}
 Az eloszlás megmutatja, **milyen valószínűséggel** fordulnak elő a változó egyes értékei a populációban.
 
-- **Diszkrét** változó: az értékek valószínűségeinek együttese, $P(X = x_i) = p_i$, ahol $\sum p_i = 1$
+- **Diszkrét** változó: $P(X = x_i) = p_i$, ahol $\sum p_i = 1$
 - **Folytonos** változó: sűrűségfüggvénnyel adjuk meg; a görbe alatti **terület** a valószínűség:
 
 $$P(a \le X \le b) = \int_a^b f(x)\,dx$$

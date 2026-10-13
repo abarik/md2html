@@ -181,7 +181,7 @@ def tex(src, display=False):
         return f'<{tag}>{kids}</{tag}>'
 
     def seq(end):
-        out = ''
+        out, prev = '', ''
         while True:
             t = take()
             if t is None or t == end:
@@ -189,8 +189,11 @@ def tex(src, display=False):
             if t in '^_':
                 p[0] -= 1
                 a = '<mrow></mrow>'
+            elif t in ('-', '+', '\\pm') and (not prev or prev.startswith('<mo') and not re.match(r'<mo[^>]*>[)\]}|⟩]', prev)):
+                a = atom(t).replace('<mo>', '<mo form="prefix">', 1)  # előjel, nem kivonás
             else:
                 a = atom(t)
+            prev = a
             sub = sup = None
             while peek() in ('^', '_', "'"):
                 op = take()

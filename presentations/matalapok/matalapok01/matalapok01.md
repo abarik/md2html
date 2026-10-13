@@ -358,7 +358,7 @@ Legalább 80%-os erő ajánlott: közepes hatásnál ($d = 0{,}5$) ehhez csoport
 :::
 
 ::: {.column width="38%"}
-Két független csoport összehasonlítása, kétoldali próba.
+Két független csoport, kétoldali próba.
 
 ```{=html}
 <div class="controls">

@@ -52,6 +52,7 @@ body { background: var(--bg); color: var(--fg); font-family: var(--sans); transi
 }
 .deck>section.past { transform: translateX(-30px) }
 .deck>section.present { opacity: 1; visibility: visible; transform: none }
+.deck>section>* { flex-shrink: 0 }  /* a túl sok tartalom ne csússzon egymásra, inkább lógjon ki (mérhető) */
 
 /* ---- tipográfia */
 h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.15; margin: 0 0 .5em; letter-spacing: -.01em }

@@ -207,7 +207,7 @@ Pozitív érték: jobbra ferde; negatív: balra ferde; nulla: szimmetrikus (norm
 
 :::: {.columns}
 ::: {.column width="55%"}
-- A csúcsosság (kurtózis) a standardizált eltérések **negyedik** hatványának átlaga; a normális eloszlásé 3, ezért gyakran a „többletcsúcsosságot” közlik: $\gamma_2 = E\left[\left(\frac{X-\mu}{\sigma}\right)^4\right] - 3$
+- A standardizált eltérések **negyedik** hatványának átlaga, a normálisé 3; a „többletcsúcsosság”: $\gamma_2 = E\left[\left(\frac{X-\mu}{\sigma}\right)^4\right] - 3$
 - **Régi értelmezés:** a csúcs „hegyességét” méri – ez **téves**
 - **Mai értelmezés:** a **farkak** súlyát, a szélsőséges értékek valószínűségét méri [(DeCarlo, 1997; Westfall, 2014)]{.cite}
 :::
@@ -215,13 +215,13 @@ Pozitív érték: jobbra ferde; negatív: balra ferde; nulla: szimmetrikus (norm
 ::: {.column width="45%"}
 ```{=html}
 <div class="widget">
-  <svg id="ku-plot" viewBox="0 0 500 300" role="img" aria-label="Normális és Laplace-eloszlás azonos szórással"></svg>
+  <svg id="ku-plot" viewBox="0 0 500 230" role="img" aria-label="Normális és Laplace-eloszlás azonos szórással"></svg>
   <div class="legend" style="margin-left:10px"><span><i class="dash"></i>normális (γ₂ = 0)</span><span><i></i>Laplace (γ₂ = 3)</span></div>
 </div>
 <script>
 (() => {
   const P = window.Plot, svg = document.getElementById('ku-plot');
-  const sx = P.scale(-4.5, 4.5, 15, 485), sy = P.scale(0, 0.75, 280, 15), b = 1 / Math.SQRT2;
+  const sx = P.scale(-4.5, 4.5, 15, 485), sy = P.scale(0, 0.75, 220, 10), b = 1 / Math.SQRT2;
   const path = f => Array.from({length: 301}, (_, i) => { const x = -4.5 + 9 * i / 300; return (i ? 'L' : 'M') + sx(x).toFixed(1) + ',' + sy(f(x)).toFixed(1); }).join('');
   P.el(svg, 'path', {class: 'ref', d: path(x => Math.exp(-x * x / 2) / Math.sqrt(2 * Math.PI)), style: 'opacity:1'});
   P.el(svg, 'path', {class: 'curve', d: path(x => Math.exp(-Math.abs(x) / b) / (2 * b))});
@@ -232,9 +232,7 @@ Pozitív érték: jobbra ferde; negatív: balra ferde; nulla: szimmetrikus (norm
 :::
 ::::
 
-::: {.callout-warning}
-Ugyanakkora szórás mellett a nagyobb csúcsosságú eloszlás **több szélsőséges értéket** produkál – ez a kiugró értékek szempontjából fontos.
-:::
+Ugyanakkora szórás mellett a nagyobb csúcsosságú eloszlás **több szélsőséges értéket** produkál.
 
 ## Próbálja ki: csúcsosság
 
@@ -641,9 +639,7 @@ A testsúly relatíve jóval változékonyabb.
 :::
 ::::
 
-::: {.callout-warning}
-Csak **arányskálán**, pozitív értékekre értelmes: intervallumskálán (pl. °C) a nullpont önkényes.
-:::
+⚠ Csak **arányskálán**, pozitív értékekre értelmes: intervallumskálán (pl. °C) a nullpont önkényes.
 
 ## Melyik mutatót mikor? {.smaller}
 

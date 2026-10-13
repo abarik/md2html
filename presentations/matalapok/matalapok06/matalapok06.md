@@ -179,11 +179,11 @@ $$M(X) = 1 \cdot \tfrac{1}{6} + 2 \cdot \tfrac{1}{6} + \ldots + 6 \cdot \tfrac{1
 A várható érték **átlagérték**, nem a leggyakoribb érték – a kockadobásnál nincs is a lehetséges értékek között. A nemzetközi szakirodalomban jele: $E(X)$.
 :::
 
-## Variancia és szórás
+## Variancia és szórás {.smaller}
 
-$$D^2(X) = \sigma_X^2 = \sum_k (x_k - \mu)^2\,p_k = M(X^2) - M(X)^2, \qquad D(X) = \sigma_X = \sqrt{D^2(X)}$$
+**Variancia:** $D^2(X) = \sigma_X^2 = \sum_k (x_k - \mu)^2\,p_k = M(X^2) - M(X)^2$; **szórás:** $D(X) = \sqrt{D^2(X)}$
 
-*Példa:* egy autókölcsönző 20 hét alatt hetente kikölcsönzött autóinak száma
+*Példa:* egy autókölcsönzőből 20 hét alatt hetente kikölcsönzött autók száma
 
 | Autók száma ($x_i$) | 10 | 11 | 12 | 13 | **Összesen** |
 |:--|--:|--:|--:|--:|--:|
@@ -192,7 +192,7 @@ $$D^2(X) = \sigma_X^2 = \sum_k (x_k - \mu)^2\,p_k = M(X^2) - M(X)^2, \qquad D(X)
 | $x_i\,p_i$ | 2,5 | 3,3 | 4,2 | 1,3 | **11,3** |
 | $x_i^2\,p_i$ | 25 | 36,3 | 50,4 | 16,9 | **128,6** |
 
-$\mu = 11{,}3$; $\quad \sigma^2 = 128{,}6 - 11{,}3^2 = 0{,}91$; $\quad \sigma \approx 0{,}95$ autó
+$\mu = 11{,}3$; $\quad \sigma^2 = 128{,}6 - 11{,}3^2 = 0{,}91$; $\quad \sigma = \sqrt{0{,}91} \approx 0{,}95$ autó
 
 ## Standardizálás és relatív szórás
 
@@ -592,9 +592,7 @@ A pszichológiai tesztek eredményeit gyakran **lineárisan transzformált** z-p
 | $\mu \pm 2\sigma$ | 95,45% |
 | $\mu \pm 3\sigma$ | 99,73% |
 
-Ellenőrzés: $P(-1 < Z < 1) = 2\Phi(1) - 1 = 2 \cdot 0{,}8413 - 1 = 0{,}6826$
-
-A szimmetria miatt: $\Phi(-z) = 1 - \Phi(z)$, és $P(a < X < b) = F(b) - F(a)$.
+Szimmetria: $\Phi(-z) = 1 - \Phi(z)$, így $P(-1 < Z < 1)$ $= 2\Phi(1) - 1$ $= 0{,}6827$
 :::
 ::::
 
