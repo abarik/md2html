@@ -1,0 +1,367 @@
+<!doctype html><html lang="hu"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Valószínűségi változók és nevezetes eloszlások</title><style>:root{color-scheme:light;--bg:#f8f7f3;--paper:#ffffff;--fg:#1c2230;--muted:#6a7183;--line:#dcdfe6;--accent:#2b59c3;--accent-2:#e2583e;--on-accent:#ffffff;--ok:#17845b;--warn:#c07d10;--danger:#c8314f;--code-bg:#f0efea;--tok-comment:#8a8f9c;--tok-string:#17845b;--tok-number:#b4530a;--tok-keyword:#7a3fc4;--stripe:rgba(43,89,195,.045);--glow:rgba(43,89,195,.13);--part-bg:#2b59c3;--part-fg:#ffffff;--inv-bg:#1c2230;--inv-fg:#eef0f5;--inv-hi:#ffc985;--note-bg:#fffbe6;--note-fg:#3d3410;--note-line:#eadb8e;--track:rgba(0,0,0,.06);--hover:rgba(127,127,127,.18);--shadow:rgba(20,30,60,.25);--sans:"Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif:"Source Serif 4","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--mono:"JetBrains Mono","Cascadia Code",ui-monospace,Menlo,Consolas,monospace}*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{background:var(--bg);color:var(--fg);font-family:var(--sans);transition:background-color .4s}.deck{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%)}.deck>section{position:absolute;inset:0;display:flex;flex-direction:column;padding:60px 84px 70px;font-size:30px;line-height:1.45;overflow:hidden;opacity:0;visibility:hidden;transform:translateX(30px);transition:opacity .35s ease,transform .35s ease,visibility .35s}.deck>section.past{transform:translateX(-30px)}.deck>section.present{opacity:1;visibility:visible;transform:none}h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}h2{font-size:48px}h2::after{content:"";display:block;width:56px;height:5px;border-radius:3px;background:var(--accent-2);margin-top:14px}h3{font-size:32px;color:var(--accent);margin:.2em 0 .4em}p{margin:0 0 .6em}strong{color:var(--accent)}a{color:var(--accent);text-underline-offset:3px}ul,ol{margin:0 0 .6em;padding-left:1.2em}li{margin:.25em 0}li::marker{color:var(--accent-2)}li ul,li ol{font-size:.85em;margin:.15em 0}blockquote{margin:0 0 .7em;padding:.2em 1em;border-left:5px solid var(--accent-2);color:var(--muted);font-style:italic}figure{margin:0 0 .6em;text-align:center}figcaption{color:var(--muted);font-size:.75em;margin-top:.4em}img{max-width:100%;max-height:100%}hr{border:0;border-top:1px solid var(--line);margin:.8em 0}math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math","Noto Sans Math",math;font-size:1.05em}math[display=block]{margin:.4em 0 .7em;font-size:1.2em}code{font-family:var(--mono);font-size:.82em;background:var(--code-bg);padding:.08em .32em;border-radius:5px}pre{margin:0 0 .7em;background:var(--code-bg);border-radius:12px;padding:18px 22px;overflow:auto;border-left:5px solid var(--accent)}pre code{display:block;padding:0;background:none;font-size:21px;line-height:1.55}.tc{color:var(--tok-comment);font-style:italic}.ts{color:var(--tok-string)}.tn{color:var(--tok-number)}.tk{color:var(--tok-keyword);font-weight:600}table{border-collapse:collapse;width:100%;font-size:.8em;margin:.2em 0 .7em}caption{caption-side:bottom;text-align:left;color:var(--muted);font-size:.8em;padding-top:.6em}th{text-align:left;border-bottom:2px solid var(--fg);padding:.35em .6em}td{border-bottom:1px solid var(--line);padding:.35em .6em;vertical-align:top}tbody tr:nth-child(odd){background:var(--stripe)}.title-slide{justify-content:center;padding-left:120px;background:radial-gradient(circle at 88% 18%,var(--glow),transparent 42%),var(--bg)}.title-slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:22px;background:linear-gradient(var(--accent),var(--accent-2))}.title-slide .title{font-size:74px;max-width:15ch;margin-bottom:.2em}.subtitle{font-size:34px;color:var(--muted);margin-bottom:1.6em}.author{font-weight:600;margin:0}.institute,.date{color:var(--muted);font-size:24px;margin:.2em 0 0}.part{justify-content:center;padding-left:120px;background:var(--part-bg);color:var(--part-fg)}.part h1{font-size:78px;max-width:14ch}.part h1::before{content:"";display:block;width:80px;height:6px;background:var(--accent-2);margin-bottom:28px;border-radius:3px}.part strong,.part a{color:inherit}.inverse{background:var(--inv-bg);color:var(--inv-fg)}.inverse strong{color:var(--inv-hi)}.inverse li::marker{color:var(--inv-hi)}.center{justify-content:center}.smaller{font-size:24px}.smaller h2{font-size:40px}.scrollable{overflow-y:auto}.absolute{position:absolute}.muted{color:var(--muted)}.small{font-size:.75em}.columns{display:flex;gap:44px;align-items:flex-start;min-height:0}.column{flex:1 1 0;min-width:0}.column[style*="width"]{flex:0 1 auto}.callout{--c:var(--accent);border-left:6px solid var(--c);background:color-mix(in srgb,var(--c) 8%,var(--paper));border-radius:10px;padding:.55em 1em;margin:0 0 .8em;font-size:.88em}.callout>:last-child{margin-bottom:0}.callout-title{font-weight:700;color:var(--c);margin:0 0 .25em}.callout-tip{--c:var(--ok)}.callout-warning{--c:var(--warn)}.callout-important{--c:var(--danger)}.callout-caution{--c:var(--accent-2)}.fragment{opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s}.fragment.visible{opacity:1;transform:none}.notes{display:none}.show-notes .present .notes{display:block;position:absolute;left:24px;right:24px;bottom:24px;z-index:5;background:var(--note-bg);color:var(--note-fg);border:1px solid var(--note-line);border-radius:10px;padding:14px 18px;font-size:20px;line-height:1.4;box-shadow:0 10px 30px -10px var(--shadow)}.show-notes .present .notes>:last-child{margin-bottom:0}.deck>footer{position:absolute;left:84px;bottom:22px;font-size:16px;color:var(--muted);pointer-events:none}.deck:has(.title-slide.present,.part.present,.inverse.present)>footer{display:none}.progress{position:fixed;left:0;right:0;bottom:0;height:4px;background:var(--track)}.progress i{display:block;height:100%;width:0;background:var(--accent-2);transition:width .35s}.ctl{position:fixed;right:14px;bottom:12px;display:flex;align-items:center;gap:4px;font:13px var(--sans);color:var(--muted);opacity:.6;transition:opacity .2s}.ctl:hover{opacity:1}.ctl button{border:0;background:none;font-size:22px;line-height:1;color:inherit;cursor:pointer;padding:2px 8px;border-radius:6px}.ctl button:hover{background:var(--hover)}.widget{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px 10px;box-shadow:0 12px 32px -14px var(--shadow)}.widget svg{display:block;width:100%;height:auto}.widget .grid{stroke:var(--line);stroke-width:1}.widget .axis{stroke:var(--fg);stroke-width:1.5}.widget .tick{fill:var(--muted);font:15px var(--sans)}.widget .curve{fill:none;stroke:var(--accent);stroke-width:4;stroke-linejoin:round}.widget .ref{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:7 6;opacity:.6}.widget .area{fill:var(--accent);fill-opacity:.17}.widget .mean{stroke:var(--accent-2);stroke-width:2.5;stroke-dasharray:5 5}.widget .label{fill:var(--accent-2);font:600 18px var(--sans)}.legend{display:flex;gap:22px;margin:4px 0 0 46px;font-size:16px;color:var(--muted)}.legend i{display:inline-block;width:24px;vertical-align:middle;margin-right:6px;border-top:4px solid var(--accent)}.legend i.dash{border-top:2px dashed var(--muted)}.controls{display:grid;gap:14px;font-size:21px}.controls label{display:grid;gap:2px}.controls output{font-family:var(--mono);font-weight:600;color:var(--accent)}input[type=range]{width:100%;margin:0;accent-color:var(--accent);cursor:pointer}.seg{display:inline-flex;gap:2px;padding:3px;margin-left:6px;border:1px solid var(--line);border-radius:999px;background:var(--paper);vertical-align:middle}.seg button{border:0;background:none;border-radius:999px;padding:4px 13px;font:600 17px var(--sans);color:var(--muted);cursor:pointer}.seg button.on{background:var(--accent);color:var(--on-accent)}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 14px}.stat b{display:block;font:700 28px var(--mono)}.stat small{display:block;color:var(--muted);font-size:15px;line-height:1.3}.widget .bar{fill:var(--accent);fill-opacity:.5}.widget .area-2{fill:var(--accent-2);fill-opacity:.3}.widget .dot{fill:var(--accent);stroke:var(--paper);stroke-width:1.5}.widget .title{fill:var(--fg);font:700 18px var(--sans)}.btn{border:1px solid var(--line);background:var(--paper);color:var(--fg);border-radius:999px;padding:6px 16px;font:600 17px var(--sans);cursor:pointer}.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}.btn:disabled{cursor:default;opacity:.5}.btn.on:disabled{opacity:1}.grid{display:grid;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));gap:16px;margin:0 0 .6em}.cite{color:var(--muted);font-size:.75em}.refs{font-size:.7em;line-height:1.3}.refs p{margin:0 0 .4em;padding-left:1.6em;text-indent:-1.6em}@media print{@page{size:1280px 720px;margin:0}html,body{height:auto;overflow:visible;background:none !important}.deck{position:static;transform:none !important;width:auto;height:auto}.deck>section{position:relative;width:1280px;height:720px;opacity:1;visibility:visible;transform:none;break-after:page;print-color-adjust:exact;-webkit-print-color-adjust:exact}:where(.deck>section){background-color:var(--bg)}.fragment{opacity:1;transform:none}.progress,.ctl,.notes,.deck>footer{display:none !important}}@media (prefers-reduced-motion:reduce){*{transition:none !important}}</style><div class="deck"><section class="title-slide"><h1 class="title">Valószínűségi változók és nevezetes eloszlások</h1><p class="subtitle">Várható érték és szórás, binomiális, Poisson- és normális eloszlás, centrális határeloszlás-tétel</p><p class="author">Abari Kálmán</p><p class="date">2026. ősz</p></section><section><h2>Miről lesz szó?</h2><div class="grid" style="--cols:4">
+  <div class="stat"><b>X</b><small style="font-size:19px"><strong>Valószínűségi változó:</strong> a véletlen kimenetelhez számot rendel</small></div>
+  <div class="stat"><b>μ, σ</b><small style="font-size:19px"><strong>Várható érték és szórás:</strong> az eloszlás közepe és szóródása</small></div>
+  <div class="stat"><b>B, Po, N</b><small style="font-size:19px"><strong>Nevezetes eloszlások:</strong> binomiális, Poisson, normális</small></div>
+  <div class="stat"><b>CHT</b><small style="font-size:19px"><strong>Centrális határeloszlás-tétel:</strong> miért normális a mintaátlag?</small></div>
+</div>
+<script>
+// közös segédfüggvények a diasor ábráihoz és számításaihoz
+window.Plot = {
+  NS: 'http://www.w3.org/2000/svg',
+  fmt: (v, d = 0) => v.toLocaleString('hu-HU', {minimumFractionDigits: d, maximumFractionDigits: d}),
+  scale: (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0),
+  el(parent, tag, a = {}, text) {
+    const e = document.createElementNS(this.NS, tag);
+    for (const k in a) e.setAttribute(k, a[k]);
+    if (text != null) e.textContent = text;
+    return parent.appendChild(e);
+  },
+  seg(id, fn) {
+    const box = document.getElementById(id);
+    box.onclick = e => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      for (const x of box.children) x.classList.toggle('on', x === b);
+      fn(b.dataset);
+    };
+  },
+  path(f, a, b, sx, sy, n = 300) {
+    let d = '';
+    for (let i = 0; i <= n; i++) { const x = a + (b - a) * i / n; d += (i ? 'L' : 'M') + sx(x).toFixed(1) + ',' + sy(f(x)).toFixed(1); }
+    return d;
+  },
+  phi: x => Math.exp(-x * x / 2) / Math.sqrt(2 * Math.PI),
+  Phi(x) {  // standard normális eloszlásfüggvény (Abramowitz–Stegun 7.1.26)
+    const t = 1 / (1 + 0.3275911 * Math.abs(x) / Math.SQRT2);
+    const e = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x / 2);
+    return x >= 0 ? (1 + e) / 2 : (1 - e) / 2;
+  },
+  invPhi(p) { let lo = -9, hi = 9; for (let i = 0; i < 80; i++) { const m = (lo + hi) / 2; this.Phi(m) < p ? lo = m : hi = m; } return (lo + hi) / 2; },
+  C(n, k) { if (k < 0 || k > n) return 0; let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return r; },
+  binom(n, k, p) { return this.C(n, k) * p ** k * (1 - p) ** (n - k); },
+  pois(l, k) { let r = Math.exp(-l); for (let i = 1; i <= k; i++) r *= l / i; return r; },
+  grid(svg, sy, x0, x1, ticks, d = 2) {
+    ticks.forEach(v => {
+      this.el(svg, 'line', {class: 'grid', x1: x0, x2: x1, y1: sy(v), y2: sy(v)});
+      this.el(svg, 'text', {class: 'tick', x: x0 - 8, y: sy(v) + 5, 'text-anchor': 'end'}, this.fmt(v, d));
+    });
+  }
+};
+</script><p>A pszichológiában mért mennyiségek – helyes válaszok száma, reakcióidő, tesztpontszám – <strong>valószínűségi változók</strong>; viselkedésüket eloszlásuk írja le.</p></section><section class="part"><h1>Valószínűségi változók</h1></section><section><h2>Valószínűségi változó</h2><p>Az eseménytéren értelmezett valós függvény: <math><mi>X</mi><mo>:</mo><mi mathvariant="normal">Ω</mi><mo>→</mo><mi mathvariant="normal">ℝ</mi></math> – minden kimenetelhez egy <strong>számot</strong> rendel.</p><div class="columns"><div class="column" style="width:45%"><p><em>Példa:</em> egy érmét háromszor feldobunk, <math><mi>X</mi></math> a <strong>fejek száma</strong>.</p><p>0 fej: 1, 1 fej: 3, 2 fej: 3, 3 fej: 1 kimenetel.</p><p><math><mi>X</mi></math> értéke a kísérlet kimenetelétől függ, ezért valószínűségi változó.</p></div><div class="column" style="width:55%"><div class="widget"><svg id="rv-plot" viewBox="0 0 560 360" role="img" aria-label="A kimenetelek leképezése a fejek számára"></svg></div>
+<script>
+(() => {
+  const P = window.Plot, svg = document.getElementById('rv-plot');
+  const om = ['iii', 'fii', 'ifi', 'iif', 'ffi', 'fif', 'iff', 'fff'], val = s => [...s].filter(c => c === 'f').length;
+  const yv = v => 60 + v * 85;
+  P.el(svg, 'text', {class: 'title', x: 70, y: 22, 'text-anchor': 'middle'}, 'Ω');
+  P.el(svg, 'text', {class: 'title', x: 470, y: 22, 'text-anchor': 'middle'}, 'X értéke');
+  om.forEach((s, i) => {
+    const y = 48 + i * 40;
+    P.el(svg, 'line', {x1: 108, x2: 448, y1: y, y2: yv(val(s)), style: 'stroke:var(--accent);stroke-opacity:.45;stroke-width:2'});
+    P.el(svg, 'rect', {x: 30, y: y - 15, width: 78, height: 30, rx: 8, style: 'fill:var(--paper);stroke:var(--line)'});
+    P.el(svg, 'text', {class: 'tick', x: 69, y: y + 5, 'text-anchor': 'middle', style: 'font-family:var(--mono)'}, s);
+  });
+  [0, 1, 2, 3].forEach(v => {
+    P.el(svg, 'circle', {cx: 470, cy: yv(v), r: 22, style: 'fill:var(--accent)'});
+    P.el(svg, 'text', {class: 'title', x: 470, y: yv(v) + 6, 'text-anchor': 'middle', style: 'fill:var(--on-accent)'}, v);
+  });
+})();
+</script></div></div></section><section><h2>Az eloszlás</h2><p>A valószínűségi változó <strong>eloszlása</strong> a lehetséges értékek és a hozzájuk tartozó valószínűségek összessége: <math><msub><mi>p</mi><mi>k</mi></msub><mo>=</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></math>.</p><div class="columns"><div class="column" style="width:40%"><table><thead><tr><th>Fejek száma (<math><msub><mi>x</mi><mi>k</mi></msub></math>)</th><th style="text-align:center">0</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th></tr></thead><tbody><tr><td><math><msub><mi>p</mi><mi>k</mi></msub></math></td><td style="text-align:center">1/8</td><td style="text-align:center">3/8</td><td style="text-align:center">3/8</td><td style="text-align:center">1/8</td></tr></tbody></table><p>Tulajdonságai:</p><ul><li><math><mn>0</mn><mo>≤</mo><msub><mi>p</mi><mi>k</mi></msub><mo>≤</mo><mn>1</mn></math></li><li><math><mo>∑</mo><msub><mi>p</mi><mi>k</mi></msub><mo>=</mo><mn>1</mn></math></li></ul></div><div class="column" style="width:60%"><div class="widget"><svg id="d3-plot" viewBox="0 0 600 320" role="img" aria-label="A fejek számának eloszlása vonaldiagramon"></svg></div>
+<script>
+(() => {
+  const P = window.Plot, svg = document.getElementById('d3-plot');
+  const x = P.scale(-0.5, 3.5, 70, 580), y = P.scale(0, 0.5, 280, 20);
+  P.grid(svg, y, 70, 580, [0, 0.125, 0.25, 0.375, 0.5], 3);
+  [1, 3, 3, 1].forEach((c, k) => {
+    P.el(svg, 'line', {x1: x(k), x2: x(k), y1: y(0), y2: y(c / 8), style: 'stroke:var(--accent);stroke-width:5'});
+    P.el(svg, 'circle', {class: 'dot', cx: x(k), cy: y(c / 8), r: 9});
+    P.el(svg, 'text', {class: 'tick', x: x(k), y: 306, 'text-anchor': 'middle'}, k);
+  });
+  P.el(svg, 'line', {class: 'axis', x1: 70, x2: 580, y1: y(0), y2: y(0)});
+})();
+</script></div></div></section><section><h2>Diszkrét és folytonos valószínűségi változók</h2><div class="columns"><div class="column"><div class="callout callout-note"><p class="callout-title">Diszkrét</p><p>Lehetséges értékei <strong>megszámlálhatók</strong> (izolált pontok a számegyenesen). Eloszlását a <math><msub><mi>p</mi><mi>k</mi></msub><mo>=</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></math> valószínűségek adják meg.</p><p><em>Pszichológiai példák:</em> helyes válaszok száma egy teszten, hibák száma, pánikrohamok száma egy héten.</p></div></div><div class="column"><div class="callout callout-tip"><p class="callout-title">Folytonos</p><p>Értékei egy <strong>intervallumot</strong> töltenek ki; egyetlen érték valószínűsége 0, csak <strong>tartományoknak</strong> van pozitív valószínűsége. Eloszlását a <strong>sűrűségfüggvény</strong> adja meg.</p><p><em>Pszichológiai példák:</em> reakcióidő, testmagasság, szívfrekvencia.</p></div></div></div></section><section class="part"><h1>Várható érték és szórás</h1></section><section><h2>Várható érték</h2><p>A várható érték a lehetséges értékek <strong>valószínűségekkel súlyozott átlaga</strong> – az eloszlás „közepe”:</p><math display="block"><mi>M</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><msub><mi>μ</mi><mi>X</mi></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>k</mi></mrow></munder><msub><mi>x</mi><mi>k</mi></msub><mspace width="0.167em"></mspace><msub><mi>p</mi><mi>k</mi></msub></math><p><em>Példa – kockadobás:</em> minden érték valószínűsége <math><mn>1</mn><mo>/</mo><mn>6</mn></math>, így</p><math display="block"><mi>M</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>6</mn></mrow></mfrac><mo>+</mo><mn>2</mn><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>6</mn></mrow></mfrac><mo>+</mo><mo>…</mo><mo>+</mo><mn>6</mn><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>6</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>21</mn></mrow><mrow><mn>6</mn></mrow></mfrac><mo>=</mo><mn>3,5</mn></math><div class="callout callout-warning"><p class="callout-title">Figyelem</p><p>A várható érték <strong>átlagérték</strong>, nem a leggyakoribb érték – a kockadobásnál nincs is a lehetséges értékek között. A nemzetközi szakirodalomban jele: <math><mi>E</mi><mo>(</mo><mi>X</mi><mo>)</mo></math>.</p></div></section><section><h2>Variancia és szórás</h2><math display="block"><msup><mi>D</mi><mn>2</mn></msup><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><msubsup><mi>σ</mi><mi>X</mi><mn>2</mn></msubsup><mo>=</mo><munder><mo>∑</mo><mi>k</mi></munder><mo>(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mn>2</mn></msup><mspace width="0.167em"></mspace><msub><mi>p</mi><mi>k</mi></msub><mo>=</mo><mi>M</mi><mo>(</mo><msup><mi>X</mi><mn>2</mn></msup><mo>)</mo><mo>−</mo><mi>M</mi><mo>(</mo><mi>X</mi><msup><mo>)</mo><mn>2</mn></msup><mo>,</mo><mspace width="2em"></mspace><mi>D</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><msub><mi>σ</mi><mi>X</mi></msub><mo>=</mo><msqrt><mrow><msup><mi>D</mi><mn>2</mn></msup><mo>(</mo><mi>X</mi><mo>)</mo></mrow></msqrt></math><p><em>Példa:</em> egy autókölcsönző 20 hét alatt hetente kikölcsönzött autóinak száma</p><table><thead><tr><th>Autók száma (<math><msub><mi>x</mi><mi>i</mi></msub></math>)</th><th style="text-align:right">10</th><th style="text-align:right">11</th><th style="text-align:right">12</th><th style="text-align:right">13</th><th style="text-align:right"><strong>Összesen</strong></th></tr></thead><tbody><tr><td>Hetek száma</td><td style="text-align:right">5</td><td style="text-align:right">6</td><td style="text-align:right">7</td><td style="text-align:right">2</td><td style="text-align:right"><strong>20</strong></td></tr><tr><td><math><msub><mi>p</mi><mi>i</mi></msub></math></td><td style="text-align:right">0,25</td><td style="text-align:right">0,30</td><td style="text-align:right">0,35</td><td style="text-align:right">0,10</td><td style="text-align:right"><strong>1</strong></td></tr><tr><td><math><msub><mi>x</mi><mi>i</mi></msub><mspace width="0.167em"></mspace><msub><mi>p</mi><mi>i</mi></msub></math></td><td style="text-align:right">2,5</td><td style="text-align:right">3,3</td><td style="text-align:right">4,2</td><td style="text-align:right">1,3</td><td style="text-align:right"><strong>11,3</strong></td></tr><tr><td><math><msubsup><mi>x</mi><mi>i</mi><mn>2</mn></msubsup><mspace width="0.167em"></mspace><msub><mi>p</mi><mi>i</mi></msub></math></td><td style="text-align:right">25</td><td style="text-align:right">36,3</td><td style="text-align:right">50,4</td><td style="text-align:right">16,9</td><td style="text-align:right"><strong>128,6</strong></td></tr></tbody></table><p><math><mi>μ</mi><mo>=</mo><mn>11,3</mn></math>; <math><mspace width="1em"></mspace><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mn>128,6</mn><mo>−</mo><msup><mn>11,3</mn><mn>2</mn></msup><mo>=</mo><mn>0,91</mn></math>; <math><mspace width="1em"></mspace><mi>σ</mi><mo>≈</mo><mn>0,95</mn></math> autó</p></section><section><h2>Standardizálás és relatív szórás</h2><p>A <strong>standardizált</strong> (normált) változó:</p><math display="block"><mi>Z</mi><mo>=</mo><mfrac><mrow><mi>X</mi><mo>−</mo><mi>μ</mi></mrow><mrow><mi>σ</mi></mrow></mfrac><mo>,</mo><mspace width="2em"></mspace><mi>M</mi><mo>(</mo><mi>Z</mi><mo>)</mo><mo>=</mo><mn>0</mn><mo>,</mo><mspace width="1em"></mspace><msup><mi>D</mi><mn>2</mn></msup><mo>(</mo><mi>Z</mi><mo>)</mo><mo>=</mo><mn>1</mn></math><p><math><mi>Z</mi></math> azt mutatja meg, hogy <math><mi>X</mi></math> értéke <strong>hány szórásnyira</strong> van a várható értéktől – mértékegységtől függetlenül.</p><p>A <strong>relatív szórás</strong>: <math><mi>σ</mi><mo>/</mo><mi>μ</mi></math> (csak pozitív, arányskálájú változónál értelmes).</p></section><section class="part"><h1>Folytonos valószínűségi változók</h1></section><section><h2>Sűrűségfüggvény</h2><div class="columns"><div class="column" style="width:52%"><p>Folytonos változónál egyetlen érték valószínűsége 0, ezért az eloszlást az <math><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> <strong>sűrűségfüggvénnyel</strong> adjuk meg:</p><ol><li><math><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>≥</mo><mn>0</mn></math> – a görbe az <math><mi>x</mi></math> tengely fölött van</li><li>a görbe alatti teljes terület 1</li><li>egy <math><mo>[</mo><mi>a</mi><mo>;</mo><mspace width="0.25em"></mspace><mi>b</mi><mo>]</mo></math> intervallumba esés valószínűsége a fölötte lévő <strong>terület</strong>:</li></ol><math display="block"><mi>P</mi><mo>(</mo><mi>a</mi><mo>≤</mo><mi>X</mi><mo>≤</mo><mi>b</mi><mo>)</mo><mo>=</mo><msubsup><mo>∫</mo><mi>a</mi><mi>b</mi></msubsup><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></math></div><div class="column" style="width:48%"><div class="widget"><svg id="ds-plot" viewBox="0 0 520 330" role="img" aria-label="Reakcióidő-szerű ferde sűrűségfüggvény satírozott intervallummal"></svg></div>
+<script>
+(() => {
+  const P = window.Plot, svg = document.getElementById('ds-plot');
+  // lognormális „reakcióidő” sűrűség (ms)
+  const f = x => x <= 0 ? 0 : Math.exp(-((Math.log(x) - Math.log(450)) ** 2) / (2 * 0.25 ** 2)) / (x * 0.25 * Math.sqrt(2 * Math.PI));
+  const sx = P.scale(150, 1100, 20, 505), sy = P.scale(0, 0.0038, 285, 20), a = 400, b = 550;
+  P.el(svg, 'path', {class: 'area', d: P.path(f, a, b, sx, sy) + `L${sx(b)},${sy(0)}L${sx(a)},${sy(0)}Z`});
+  P.el(svg, 'path', {class: 'curve', d: P.path(f, 150, 1100, sx, sy)});
+  P.el(svg, 'line', {class: 'axis', x1: 20, x2: 505, y1: sy(0), y2: sy(0)});
+  [200, 400, 600, 800, 1000].forEach(v => P.el(svg, 'text', {class: 'tick', x: sx(v), y: 310, 'text-anchor': 'middle'}, v));
+  P.el(svg, 'text', {class: 'label', x: sx(475), y: sy(0.0012), 'text-anchor': 'middle'}, 'P(400 ≤ X ≤ 550)');
+  P.el(svg, 'text', {class: 'tick', x: 505, y: 326, 'text-anchor': 'end'}, 'reakcióidő (ms)');
+})();
+</script></div></div></section><section><h2>Eloszlásfüggvény</h2><p>Az <strong>eloszlásfüggvény</strong> megadja, mekkora valószínűséggel kisebb <math><mi>X</mi></math> egy adott <math><mi>x</mi></math> értéknél: <math><mi>F</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>&lt;</mo><mi>x</mi><mo>)</mo></math>, és <math><mi>P</mi><mo>(</mo><mi>a</mi><mo>≤</mo><mi>X</mi><mo>&lt;</mo><mi>b</mi><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mi>b</mi><mo>)</mo><mo>−</mo><mi>F</mi><mo>(</mo><mi>a</mi><mo>)</mo></math>.</p><div class="grid" style="--cols:2">
+  <div class="widget"><svg id="cdf1" viewBox="0 0 460 230" role="img" aria-label="Diszkrét változó lépcsős eloszlásfüggvénye"></svg></div>
+  <div class="widget"><svg id="cdf2" viewBox="0 0 460 230" role="img" aria-label="Folytonos változó eloszlásfüggvénye"></svg></div>
+</div>
+<script>
+(() => {
+  const P = window.Plot;
+  const s1 = document.getElementById('cdf1'), x1 = P.scale(-1, 4, 50, 445), y = P.scale(0, 1, 190, 20);
+  P.grid(s1, y, 50, 445, [0, 0.5, 1], 1);
+  const F = [0, 1 / 8, 4 / 8, 7 / 8, 1];
+  for (let k = 0; k <= 4; k++) {
+    const a = k === 0 ? -1 : k - 1, b = k === 4 ? 4 : k;
+    P.el(s1, 'line', {x1: x1(a), x2: x1(b), y1: y(F[k]), y2: y(F[k]), style: 'stroke:var(--accent);stroke-width:4'});
+    if (k < 4) P.el(s1, 'circle', {cx: x1(k), cy: y(F[k]), r: 5, style: 'fill:var(--paper);stroke:var(--accent);stroke-width:2'});
+  }
+  [0, 1, 2, 3].forEach(v => P.el(s1, 'text', {class: 'tick', x: x1(v), y: 215, 'text-anchor': 'middle'}, v));
+  P.el(s1, 'text', {class: 'label', x: 445, y: 40, 'text-anchor': 'end'}, 'diszkrét: lépcsős');
+  const s2 = document.getElementById('cdf2'), x2 = P.scale(-3.5, 3.5, 50, 445);
+  P.grid(s2, y, 50, 445, [0, 0.5, 1], 1);
+  P.el(s2, 'path', {class: 'curve', d: P.path(v => P.Phi(v), -3.5, 3.5, x2, y)});
+  [-3, -2, -1, 0, 1, 2, 3].forEach(v => P.el(s2, 'text', {class: 'tick', x: x2(v), y: 215, 'text-anchor': 'middle'}, P.fmt(v)));
+  P.el(s2, 'text', {class: 'label', x: 445, y: 160, 'text-anchor': 'end'}, 'folytonos: sima S-görbe');
+})();
+</script><p>Diszkrét változónál <strong>lépcsős</strong>, folytonosnál <strong>folytonos</strong> (deriváltja a sűrűségfüggvény). A nemzetközi irodalom többnyire <math><mi>F</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>≤</mo><mi>x</mi><mo>)</mo></math> alakban definiálja.</p></section><section><h2>Várható érték és szórás folytonos esetben</h2><p>Az összegzés helyére <strong>integrál</strong> kerül:</p><math display="block"><mi>M</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mo>∞</mo></mrow><mrow><mo>∞</mo></mrow></msubsup><mi>x</mi><mspace width="0.167em"></mspace><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></math><math display="block"><msup><mi>D</mi><mn>2</mn></msup><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mo>∞</mo></mrow><mrow><mo>∞</mo></mrow></msubsup><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mn>2</mn></msup><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi><mo>,</mo><mspace width="2em"></mspace><mi>D</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><msqrt><mrow><msup><mi>D</mi><mn>2</mn></msup><mo>(</mo><mi>X</mi><mo>)</mo></mrow></msqrt></math><div class="callout callout-note"><p class="callout-title">Megjegyzés</p><p>A jelentés ugyanaz, mint diszkrét esetben: a várható érték az eloszlás „súlypontja”, a szórás a tőle mért tipikus eltérés.</p></div></section><section class="part"><h1>Nevezetes eloszlások</h1></section><section class="smaller"><h2>Nevezetes eloszlások áttekintése</h2><table><caption>A <strong>statisztikai eloszlásokat</strong> (<math><msup><mi>χ</mi><mn>2</mn></msup></math>, <math><mi>t</mi></math>, <math><mi>F</mi></math>) a hipotézisvizsgálatoknál használjuk – ezekről később lesz szó.</caption><thead><tr><th>Eloszlás</th><th>Típus</th><th>Paraméter</th><th style="text-align:center">Várható érték</th><th style="text-align:center">Variancia</th><th>Pszichológiai példa</th></tr></thead><tbody><tr><td>Binomiális <math><mi>B</mi><mo>(</mo><mi>n</mi><mo>,</mo><mi>p</mi><mo>)</mo></math></td><td>diszkrét</td><td><math><mi>n</mi><mo>,</mo><mi>p</mi></math></td><td style="text-align:center"><math><mi>n</mi><mi>p</mi></math></td><td style="text-align:center"><math><mi>n</mi><mi>p</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo>)</mo></math></td><td>helyes válaszok száma találgatásnál</td></tr><tr><td>Poisson <math><mi>P</mi><mi>o</mi><mo>(</mo><mi>λ</mi><mo>)</mo></math></td><td>diszkrét</td><td><math><mi>λ</mi></math></td><td style="text-align:center"><math><mi>λ</mi></math></td><td style="text-align:center"><math><mi>λ</mi></math></td><td>ritka események száma egy időszakban</td></tr><tr><td>Normális <math><mi>N</mi><mo>(</mo><mi>μ</mi><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>)</mo></math></td><td>folytonos</td><td><math><mi>μ</mi><mo>,</mo><mi>σ</mi></math></td><td style="text-align:center"><math><mi>μ</mi></math></td><td style="text-align:center"><math><msup><mi>σ</mi><mn>2</mn></msup></math></td><td>IQ-pontszám, mérési hiba</td></tr></tbody></table></section><section><h2>Binomiális eloszlás</h2><p>Egy <math><mi>A</mi></math> esemény valószínűsége <math><mi>p</mi></math>. A kísérletet <math><mi>n</mi></math>-szer <strong>egymástól függetlenül</strong> megismételjük; <math><mi>X</mi></math> = <math><mi>A</mi></math> bekövetkezéseinek száma.</p><math display="block"><mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><mi>k</mi><mo>)</mo><mo>=</mo><mrow><mo>(</mo><mfrac linethickness="0"><mrow><mi>n</mi></mrow><mrow><mi>k</mi></mrow></mfrac><mo>)</mo></mrow><msup><mi>p</mi><mi>k</mi></msup><mo>(</mo><mn>1</mn><mo>−</mo><mi>p</mi><msup><mo>)</mo><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></msup><mo>,</mo><mspace width="2em"></mspace><mi>k</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mo>…</mo><mo>,</mo><mi>n</mi></math><math display="block"><mi>μ</mi><mo>=</mo><mi>n</mi><mi>p</mi><mo>,</mo><mspace width="2em"></mspace><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mi>n</mi><mi>p</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo>)</mo></math><div class="callout callout-note"><p class="callout-title">Példa: visszatevéses húzás</p><p>10 golyóból 3 piros; visszatevéssel 20-szor húzunk (<math><mi>p</mi><mo>=</mo><mn>0,3</mn></math>). Annak valószínűsége, hogy pontosan 6 piros lesz:</p><p><math><mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><mn>6</mn><mo>)</mo><mo>=</mo><mrow><mo>(</mo><mfrac linethickness="0"><mrow><mn>20</mn></mrow><mrow><mn>6</mn></mrow></mfrac><mo>)</mo></mrow><mo>·</mo><msup><mn>0,3</mn><mn>6</mn></msup><mo>·</mo><msup><mn>0,7</mn><mrow><mn>14</mn></mrow></msup><mo>≈</mo><mn>0,192</mn></math>; <math><mspace width="1em"></mspace><mi>μ</mi><mo>=</mo><mn>6</mn></math>, <math><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mn>4,2</mn></math></p></div></section><section><h2>Próbálja ki: találgatás egy teszten</h2><div class="columns"><div class="column" style="width:60%"><div class="widget"><svg id="bn-plot" viewBox="0 0 700 380" role="img" aria-label="Binomiális eloszlás oszlopdiagramja"></svg></div></div><div class="column" style="width:40%"><p>Feleletválasztós teszt; aki <strong>csak találgat</strong>, minden kérdést <math><mi>p</mi></math> valószínűséggel talál el.</p><div class="controls" style="gap:8px">
+  <label><span>Kérdések száma: n = <output id="bn-n-o"></output></span><input id="bn-n" type="range" min="1" max="40" step="1" value="20"></label>
+  <label><span>Találati esély: p = <output id="bn-p-o"></output></span><input id="bn-p" type="range" min="0.05" max="0.95" step="0.05" value="0.25"></label>
+  <label><span>Megfelelt, ha legalább <output id="bn-k-o"></output> helyes</span><input id="bn-k" type="range" min="0" max="40" step="1" value="10"></label>
+</div>
+<div class="grid" style="--cols:2;gap:8px;margin-top:10px">
+  <div class="stat"><b id="bn-pk" style="font-size:24px"></b><small>P(X ≥ k) – „átmegy” találgatással</small></div>
+  <div class="stat"><b id="bn-m" style="font-size:24px"></b><small>μ = np és σ</small></div>
+</div>
+<script>
+(() => {
+  const P = window.Plot, $ = id => document.getElementById(id), svg = $('bn-plot');
+  function draw() {
+    const n = +$('bn-n').value, p = +$('bn-p').value;
+    $('bn-k').max = n;
+    const k0 = Math.min(+$('bn-k').value, n), pr = Array.from({length: n + 1}, (_, k) => P.binom(n, k, p));
+    const ymax = Math.max(...pr) * 1.15, x = P.scale(-0.5, n + 0.5, 60, 690), y = P.scale(0, ymax, 340, 20), w = Math.max(2, (x(1) - x(0)) * 0.75);
+    svg.replaceChildren();
+    const st = ymax > 0.5 ? 0.2 : ymax > 0.2 ? 0.1 : 0.05;
+    P.grid(svg, y, 60, 690, Array.from({length: Math.floor(ymax / st) + 1}, (_, i) => i * st), 2);
+    pr.forEach((v, k) => P.el(svg, 'rect', {class: k >= k0 ? 'bar' : '', x: x(k) - w / 2, width: w, y: y(v), height: y(0) - y(v),
+      style: k >= k0 ? 'fill:var(--accent-2);fill-opacity:.75' : 'fill:var(--accent);fill-opacity:.45'}));
+    const step = n > 20 ? 5 : n > 10 ? 2 : 1;
+    for (let k = 0; k <= n; k += step) P.el(svg, 'text', {class: 'tick', x: x(k), y: 362, 'text-anchor': 'middle'}, k);
+    P.el(svg, 'line', {class: 'axis', x1: 60, x2: 690, y1: y(0), y2: y(0)});
+    const tail = pr.slice(k0).reduce((a, b) => a + b, 0);
+    $('bn-n-o').value = n; $('bn-p-o').value = P.fmt(p, 2); $('bn-k-o').value = k0;
+    $('bn-pk').textContent = P.fmt(tail * 100, tail < 0.01 ? 3 : 1) + '%';
+    $('bn-m').textContent = P.fmt(n * p, 1) + ' és ' + P.fmt(Math.sqrt(n * p * (1 - p)), 2);
+  }
+  ['bn-n', 'bn-p', 'bn-k'].forEach(id => $(id).oninput = draw);
+  draw();
+})();
+</script></div></div><aside class="notes"><p>20 kérdés, 4 válaszlehetőség (p = 0,25): annak esélye, hogy valaki pusztán találgatással legalább 10 helyes választ ad, kb. 1,4%. Ez a tesztfejlesztésben és a „véletlen szint feletti” teljesítmény megítélésében is fontos.</p></aside></section><section class="smaller"><h2>Poisson-eloszlás</h2><p>Ha <math><mi>X</mi></math> értékei <math><mi>k</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mo>…</mo></math> és</p><math display="block"><mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><mi>k</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msup><mi>λ</mi><mi>k</mi></msup></mrow><mrow><mi>k</mi><mo>!</mo></mrow></mfrac><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi></mrow></msup><mo>,</mo><mspace width="2em"></mspace><mi>λ</mi><mo>&gt;</mo><mn>0</mn><mo>,</mo></math><p>akkor <math><mi>X</mi></math> <strong><math><mi>λ</mi></math> paraméterű Poisson-eloszlású</strong>; <math><mi>μ</mi><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mi>λ</mi></math> <span class="cite">(Poisson, 1837)</span>.</p><ul><li><strong>Ritka események</strong> száma egy időszakban: hívások 10 perc alatt, gépelési hibák oldalanként – a pszichológiában pl. <strong>pánikrohamok</strong> száma egy héten</li><li>A binomiális eloszlás <strong>határesete</strong>: nagy <math><mi>n</mi></math>, kis <math><mi>p</mi></math>, <math><mi>n</mi><mi>p</mi><mo>→</mo><mi>λ</mi></math></li></ul><div class="callout callout-note"><p class="callout-title">Példa</p><p>Naponta átlagosan 2,1 téves tűzriasztás: <math><mi>P</mi><mo>(</mo><mi>X</mi><mo>=</mo><mn>4</mn><mo>)</mo><mo>=</mo><mfrac><mrow><msup><mn>2,1</mn><mn>4</mn></msup></mrow><mrow><mn>4</mn><mo>!</mo></mrow></mfrac><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mo>−</mo><mn>2,1</mn></mrow></msup><mo>≈</mo><mn>0,099</mn></math></p></div></section><section><h2>Próbálja ki: Poisson és binomiális</h2><div class="columns"><div class="column" style="width:60%"><div class="widget">
+  <svg id="po-plot" viewBox="0 0 700 360" role="img" aria-label="Poisson-eloszlás és binomiális közelítése"></svg>
+  <div class="legend"><span><i style="border-top:10px solid var(--accent);opacity:.5;width:12px"></i>Poisson(λ)</span><span><i style="border-top-color:var(--accent-2)"></i>binomiális B(n, λ/n)</span></div>
+</div></div><div class="column" style="width:40%"><div class="controls" style="gap:8px">
+  <label><span>λ = <output id="po-l-o"></output></span><input id="po-l" type="range" min="0.5" max="10" step="0.1" value="2.1"></label>
+  <label><span>Binomiális: n = <output id="po-n-o"></output>, p = λ/n = <output id="po-pp-o"></output></span><input id="po-n" type="range" min="5" max="200" step="1" value="10"></label>
+</div>
+<div class="grid" style="--cols:2;gap:8px;margin-top:10px">
+  <div class="stat"><b id="po-4" style="font-size:24px"></b><small>Poisson: P(X = 4)</small></div>
+  <div class="stat"><b id="po-d" style="font-size:24px"></b><small>legnagyobb eltérés a binomiálistól</small></div>
+</div>
+<p style="font-size:19px;margin-top:10px">Növelje n-et: a binomiális eloszlás egyre közelebb kerül a Poisson-eloszláshoz.</p>
+<script>
+(() => {
+  const P = window.Plot, $ = id => document.getElementById(id), svg = $('po-plot');
+  function draw() {
+    const l = +$('po-l').value, n = +$('po-n').value, p = Math.min(1, l / n), K = 20;
+    const po = Array.from({length: K + 1}, (_, k) => P.pois(l, k)), bi = Array.from({length: K + 1}, (_, k) => P.binom(n, k, p));
+    const ymax = Math.max(...po, ...bi) * 1.15, x = P.scale(-0.5, K + 0.5, 60, 690), y = P.scale(0, ymax, 320, 20), w = (x(1) - x(0)) * 0.7;
+    svg.replaceChildren();
+    const st = ymax > 0.4 ? 0.1 : 0.05;
+    P.grid(svg, y, 60, 690, Array.from({length: Math.floor(ymax / st) + 1}, (_, i) => i * st), 2);
+    po.forEach((v, k) => P.el(svg, 'rect', {class: 'bar', x: x(k) - w / 2, width: w, y: y(v), height: y(0) - y(v)}));
+    P.el(svg, 'path', {d: bi.map((v, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ',' + y(v).toFixed(1)).join(''), style: 'fill:none;stroke:var(--accent-2);stroke-width:2.5'});
+    bi.forEach((v, k) => P.el(svg, 'circle', {cx: x(k), cy: y(v), r: 4.5, style: 'fill:var(--accent-2)'}));
+    for (let k = 0; k <= K; k += 2) P.el(svg, 'text', {class: 'tick', x: x(k), y: 344, 'text-anchor': 'middle'}, k);
+    P.el(svg, 'line', {class: 'axis', x1: 60, x2: 690, y1: y(0), y2: y(0)});
+    $('po-l-o').value = P.fmt(l, 1); $('po-n-o').value = n; $('po-pp-o').value = P.fmt(p, 3);
+    $('po-4').textContent = P.fmt(po[4], 4);
+    $('po-d').textContent = P.fmt(Math.max(...po.map((v, k) => Math.abs(v - bi[k]))), 4);
+  }
+  ['po-l', 'po-n'].forEach(id => $(id).oninput = draw);
+  draw();
+})();
+</script></div></div></section><section class="smaller"><h2>Normális eloszlás</h2><p>Sűrűségfüggvénye a <strong>Gauss-féle haranggörbe</strong> <span class="cite">(Gauss, 1809)</span>:</p><math display="block"><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>σ</mi><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac><mspace width="0.167em"></mspace><msup><mi>e</mi><mrow><mo>−</mo><mfrac><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac></mrow></msup></math><div class="columns"><div class="column" style="width:48%"><ul><li><math><mi>μ</mi></math>: a középérték – a görbe szimmetriája miatt egybeesik a móduszszal és a mediánnal</li><li><math><mi>σ</mi></math>: a szórás – kis szórás a várható érték körül koncentrálódó eloszlást jelent</li><li>Jelölés: <math><mi>X</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mi>μ</mi><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>)</mo></math></li></ul></div><div class="column" style="width:52%"><div class="widget">
+  <svg id="nf-plot" viewBox="0 0 520 200" role="img" aria-label="Normális eloszlások különböző paraméterekkel"></svg>
+  <div class="legend" style="margin-left:10px;flex-wrap:wrap;gap:4px 14px">
+    <span><i></i>N(0, 1)</span><span><i style="border-top-color:var(--accent-2)"></i>N(0, 2²)</span><span><i style="border-top-color:var(--ok)"></i>N(2, 0,5²)</span>
+  </div>
+</div>
+<script>
+(() => {
+  const P = window.Plot, svg = document.getElementById('nf-plot');
+  const sx = P.scale(-6, 6, 15, 505), sy = P.scale(0, 0.85, 175, 8), n = (m, s) => x => P.phi((x - m) / s) / s;
+  [[0, 1, 'var(--accent)'], [0, 2, 'var(--accent-2)'], [2, 0.5, 'var(--ok)']].forEach(([m, s, c]) =>
+    P.el(svg, 'path', {d: P.path(n(m, s), -6, 6, sx, sy), style: `fill:none;stroke:${c};stroke-width:3.5`}));
+  P.el(svg, 'line', {class: 'axis', x1: 15, x2: 505, y1: sy(0), y2: sy(0)});
+  [-4, -2, 0, 2, 4].forEach(v => P.el(svg, 'text', {class: 'tick', x: sx(v), y: 196, 'text-anchor': 'middle'}, P.fmt(v)));
+})();
+</script></div></div></section><section class="smaller"><h2>Normális-e a pszichológiai adat?</h2><ul><li>Az <strong>IQ-tesztek</strong> pontszámait úgy konstruálják, hogy közelítőleg <math><mi>N</mi><mo>(</mo><mn>100</mn><mo>,</mo><msup><mn>15</mn><mn>2</mn></msup><mo>)</mo></math> eloszlásúak legyenek</li><li>A valódi adatok azonban <strong>ritkán</strong> pontosan normálisak: 440 nagy mintás teljesítmény- és pszichometriai mérésből egy sem volt az <span class="cite">(Micceri, 1989)</span></li><li>693 kis mintás pszichológiai eloszlásnak csak 5,5%-a volt a normálishoz közeli ferdeségű és csúcsosságú <span class="cite">(Blanca és mtsai, 2013)</span></li><li>A <strong>reakcióidő</strong> tipikusan jobbra ferde; kérdőíves pontszámoknál gyakori a plafon- vagy padlóhatás</li></ul><p>A normális eloszlás ettől még központi jelentőségű: a <strong>mintaátlag</strong> eloszlása a centrális határeloszlás-tétel miatt jól közelíthető vele.</p></section><section><h2>A standard normális eloszlás</h2><p>A <math><mi>μ</mi><mo>=</mo><mn>0</mn></math>, <math><mi>σ</mi><mo>=</mo><mn>1</mn></math> paraméterű tag a <strong>standard normális eloszlás</strong>: <math><mi>Z</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></math>; eloszlásfüggvénye <math><mi mathvariant="normal">Φ</mi><mo>(</mo><mi>z</mi><mo>)</mo></math>.</p><div class="columns"><div class="column" style="width:55%"><p><strong>Lineáris transzformáció:</strong> ha <math><mi>X</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mi>μ</mi><mo>,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>)</mo></math>, akkor <math><mi>Y</mi><mo>=</mo><mi>a</mi><mi>X</mi><mo>+</mo><mi>b</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mi>a</mi><mi>μ</mi><mo>+</mo><mi>b</mi><mo>,</mo><mspace width="0.25em"></mspace><msup><mi>a</mi><mn>2</mn></msup><msup><mi>σ</mi><mn>2</mn></msup><mo>)</mo></math>, azaz <math><mi>Y</mi></math> szórása <math><mo>|</mo><mi>a</mi><mo>|</mo><mi>σ</mi></math>.</p><p><strong>Standardizálás</strong> és visszafelé:</p><math display="block"><mi>Z</mi><mo>=</mo><mfrac><mrow><mi>X</mi><mo>−</mo><mi>μ</mi></mrow><mrow><mi>σ</mi></mrow></mfrac><mo>∼</mo><mi>N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo><mo>,</mo><mspace width="2em"></mspace><mi>X</mi><mo>=</mo><mi>σ</mi><mi>Z</mi><mo>+</mo><mi>μ</mi></math></div><div class="column" style="width:45%"><table><thead><tr><th><math><mi>Y</mi></math></th><th style="text-align:center">várható érték</th><th style="text-align:center">szórás</th></tr></thead><tbody><tr><td><math><mn>2</mn><mi>X</mi><mo>+</mo><mn>3</mn></math></td><td style="text-align:center"><math><mn>2</mn><mi>μ</mi><mo>+</mo><mn>3</mn></math></td><td style="text-align:center"><math><mn>2</mn><mi>σ</mi></math></td></tr><tr><td><math><mn>5</mn><mi>X</mi></math></td><td style="text-align:center"><math><mn>5</mn><mi>μ</mi></math></td><td style="text-align:center"><math><mn>5</mn><mi>σ</mi></math></td></tr><tr><td><math><mn>0,1</mn><mi>X</mi><mo>−</mo><mn>2</mn></math></td><td style="text-align:center"><math><mn>0,1</mn><mi>μ</mi><mo>−</mo><mn>2</mn></math></td><td style="text-align:center"><math><mn>0,1</mn><mi>σ</mi></math></td></tr></tbody></table></div></div></section><section class="smaller"><h2>Lineáris transzformáció egy mintán</h2><p>Legyen a minta <math><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></math>, átlaga <math><mover accent="true"><mrow><mi>x</mi></mrow><mo>¯</mo></mover></math>, szórása <math><mi>s</mi></math>. Ha minden értékhez <math><mi>b</mi></math>-t adunk, illetve <math><mi>a</mi></math>-val szorzunk:</p><table><caption>Eltolás nem változtat a szóródáson; nyújtás a szórást <math><mo>|</mo><mi>a</mi><mo>|</mo></math>-szorosára változtatja.</caption><thead><tr><th>Transzformált adatok</th><th style="text-align:center">Átlag</th><th style="text-align:center">Szórás</th><th style="text-align:center">Variancia</th></tr></thead><tbody><tr><td><math><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi></math></td><td style="text-align:center"><math><mover accent="true"><mrow><mi>x</mi></mrow><mo>¯</mo></mover><mo>+</mo><mi>b</mi></math></td><td style="text-align:center"><math><mi>s</mi></math></td><td style="text-align:center"><math><msup><mi>s</mi><mn>2</mn></msup></math></td></tr><tr><td><math><mi>a</mi><mo>·</mo><msub><mi>x</mi><mi>i</mi></msub></math></td><td style="text-align:center"><math><mi>a</mi><mover accent="true"><mrow><mi>x</mi></mrow><mo>¯</mo></mover></math></td><td style="text-align:center"><math><mo>|</mo><mi>a</mi><mo>|</mo><mi>s</mi></math></td><td style="text-align:center"><math><msup><mi>a</mi><mn>2</mn></msup><msup><mi>s</mi><mn>2</mn></msup></math></td></tr><tr><td><math><mi>a</mi><mo>·</mo><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi></math></td><td style="text-align:center"><math><mi>a</mi><mover accent="true"><mrow><mi>x</mi></mrow><mo>¯</mo></mover><mo>+</mo><mi>b</mi></math></td><td style="text-align:center"><math><mo>|</mo><mi>a</mi><mo>|</mo><mi>s</mi></math></td><td style="text-align:center"><math><msup><mi>a</mi><mn>2</mn></msup><msup><mi>s</mi><mn>2</mn></msup></math></td></tr></tbody></table><p><em>Példa:</em> New Mexicóban a június 20-i hőmérséklet átlaga 86 °F, szórása 12,6 °F → Celsiusban (<math><mi>Y</mi><mo>=</mo><mo>(</mo><mi>X</mi><mo>−</mo><mn>32</mn><mo>)</mo><mo>/</mo><mn>1,8</mn></math>) 30 °C és 7 °C. Budapesten 25 °C és 5 °C → Fahrenheitben (<math><mi>X</mi><mo>=</mo><mn>1,8</mn><mi>Y</mi><mo>+</mo><mn>32</mn></math>) <span class="fragment">77 °F és 9 °F.</span></p></section><section><h2>Próbálja ki: standard pontskálák</h2><div class="columns"><div class="column" style="width:58%"><div class="widget"><svg id="ss-plot" viewBox="0 0 680 330" role="img" aria-label="Standard normális görbe a kiválasztott z-értékkel"></svg></div></div><div class="column" style="width:42%"><p>A pszichológiai tesztek eredményeit gyakran <strong>lineárisan transzformált</strong> z-pontként közlik.</p><div class="controls"><label><span>z = <output id="ss-z-o"></output></span><input id="ss-z" type="range" min="-3" max="3" step="0.05" value="1"></label></div>
+<div class="grid" style="--cols:2;gap:8px;margin-top:10px">
+  <div class="stat"><b id="ss-iq" style="font-size:24px"></b><small>IQ-skála: 100 + 15z</small></div>
+  <div class="stat"><b id="ss-t" style="font-size:24px"></b><small>T-pont: 50 + 10z</small></div>
+  <div class="stat"><b id="ss-st" style="font-size:24px"></b><small>sztenin (1–9): 5 + 2z</small></div>
+  <div class="stat"><b id="ss-pr" style="font-size:24px"></b><small>percentilisrang: Φ(z)</small></div>
+</div>
+<script>
+(() => {
+  const P = window.Plot, $ = id => document.getElementById(id), svg = $('ss-plot');
+  const sx = P.scale(-3.5, 3.5, 20, 665), sy = P.scale(0, 0.43, 270, 15);
+  function draw() {
+    const z = +$('ss-z').value;
+    svg.replaceChildren();
+    P.el(svg, 'path', {class: 'area', d: P.path(P.phi, -3.5, z, sx, sy) + `L${sx(z)},${sy(0)}L${sx(-3.5)},${sy(0)}Z`});
+    P.el(svg, 'path', {class: 'curve', d: P.path(P.phi, -3.5, 3.5, sx, sy)});
+    P.el(svg, 'line', {class: 'mean', x1: sx(z), x2: sx(z), y1: sy(0), y2: sy(P.phi(z)) - 10});
+    P.el(svg, 'line', {class: 'axis', x1: 20, x2: 665, y1: sy(0), y2: sy(0)});
+    [-3, -2, -1, 0, 1, 2, 3].forEach(v => {
+      P.el(svg, 'text', {class: 'tick', x: sx(v), y: 290, 'text-anchor': 'middle'}, 'z ' + P.fmt(v));
+      P.el(svg, 'text', {class: 'tick', x: sx(v), y: 310, 'text-anchor': 'middle'}, 'IQ ' + (100 + 15 * v));
+      P.el(svg, 'text', {class: 'tick', x: sx(v), y: 328, 'text-anchor': 'middle'}, 'T ' + (50 + 10 * v));
+    });
+    $('ss-z-o').value = P.fmt(z, 2);
+    $('ss-iq').textContent = P.fmt(100 + 15 * z, 1);
+    $('ss-t').textContent = P.fmt(50 + 10 * z, 1);
+    $('ss-st').textContent = Math.min(9, Math.max(1, Math.round(5 + 2 * z)));
+    $('ss-pr').textContent = P.fmt(P.Phi(z) * 100, 1) + '.';
+  }
+  $('ss-z').oninput = draw;
+  draw();
+})();
+</script></div></div></section><section><h2>Néhány összefüggés a normális eloszlásra</h2><div class="columns"><div class="column" style="width:58%"><div class="widget"><svg id="sr-plot" viewBox="0 0 640 330" role="img" aria-label="A 68–95–99,7 szabály szemléltetése"></svg></div>
+<script>
+(() => {
+  const P = window.Plot, svg = document.getElementById('sr-plot');
+  const sx = P.scale(-3.6, 3.6, 15, 625), sy = P.scale(0, 0.45, 285, 15);
+  [[-3, 3, 0.12], [-2, 2, 0.2], [-1, 1, 0.3]].forEach(([a, b, o]) =>
+    P.el(svg, 'path', {d: P.path(P.phi, a, b, sx, sy) + `L${sx(b)},${sy(0)}L${sx(a)},${sy(0)}Z`, style: `fill:var(--accent);fill-opacity:${o}`}));
+  P.el(svg, 'path', {class: 'curve', d: P.path(P.phi, -3.6, 3.6, sx, sy)});
+  P.el(svg, 'line', {class: 'axis', x1: 15, x2: 625, y1: sy(0), y2: sy(0)});
+  [['34,1%', -0.5, 0.15], ['34,1%', 0.5, 0.15], ['13,6%', -1.5, 0.05], ['13,6%', 1.5, 0.05], ['2,1%', -2.45, 0.025], ['2,1%', 2.45, 0.025]].forEach(([t, x, y]) =>
+    P.el(svg, 'text', {class: 'title', x: sx(x), y: sy(y), 'text-anchor': 'middle', style: 'font-size:16px'}, t));
+  ['μ−3σ', 'μ−2σ', 'μ−σ', 'μ', 'μ+σ', 'μ+2σ', 'μ+3σ'].forEach((t, i) => P.el(svg, 'text', {class: 'tick', x: sx(i - 3), y: 310, 'text-anchor': 'middle'}, t));
+})();
+</script></div><div class="column" style="width:42%"><table><thead><tr><th>Intervallum</th><th style="text-align:right">Valószínűség</th></tr></thead><tbody><tr><td><math><mi>μ</mi><mo>±</mo><mi>σ</mi></math></td><td style="text-align:right">68,27%</td></tr><tr><td><math><mi>μ</mi><mo>±</mo><mn>2</mn><mi>σ</mi></math></td><td style="text-align:right">95,45%</td></tr><tr><td><math><mi>μ</mi><mo>±</mo><mn>3</mn><mi>σ</mi></math></td><td style="text-align:right">99,73%</td></tr></tbody></table><p>Ellenőrzés: <math><mi>P</mi><mo>(</mo><mo>−</mo><mn>1</mn><mo>&lt;</mo><mi>Z</mi><mo>&lt;</mo><mn>1</mn><mo>)</mo><mo>=</mo><mn>2</mn><mi mathvariant="normal">Φ</mi><mo>(</mo><mn>1</mn><mo>)</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn><mo>·</mo><mn>0,8413</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>0,6826</mn></math></p><p>A szimmetria miatt: <math><mi mathvariant="normal">Φ</mi><mo>(</mo><mo>−</mo><mi>z</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mi mathvariant="normal">Φ</mi><mo>(</mo><mi>z</mi><mo>)</mo></math>, és <math><mi>P</mi><mo>(</mo><mi>a</mi><mo>&lt;</mo><mi>X</mi><mo>&lt;</mo><mi>b</mi><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mi>b</mi><mo>)</mo><mo>−</mo><mi>F</mi><mo>(</mo><mi>a</mi><mo>)</mo></math>.</p></div></div></section><section><h2>Próbálja ki: normáliseloszlás-kalkulátor</h2><div class="columns"><div class="column" style="width:58%"><div class="widget"><svg id="nc-plot" viewBox="0 0 680 340" role="img" aria-label="Normális eloszlás a kiszámított terület satírozásával"></svg></div><p>A nyomtatott táblázatok helyett ma programot használunk – ez a dia is egy ilyen kalkulátor.</p></div><div class="column" style="width:42%"><div class="controls" style="gap:10px;font-size:19px">
+  <div>Minta:<span class="seg" id="nc-pre"><button data-m="0" data-s="1" data-a="-1" data-b="1" class="on">N(0, 1)</button><button data-m="100" data-s="15" data-a="85" data-b="130">IQ</button><button data-m="2" data-s="0.03" data-a="1.95" data-b="1.98">kenyér</button></span></div>
+  <div class="grid" style="--cols:2;gap:8px">
+    <label>μ <input id="nc-m" type="number" step="any" value="0" style="width:100%;font-size:18px"></label>
+    <label>σ <input id="nc-s" type="number" step="any" min="0" value="1" style="width:100%;font-size:18px"></label>
+    <label>a (alsó határ) <input id="nc-a" type="number" step="any" value="-1" style="width:100%;font-size:18px"></label>
+    <label>b (felső határ) <input id="nc-b" type="number" step="any" value="1" style="width:100%;font-size:18px"></label>
+  </div>
+  <div>Terület:<span class="seg" id="nc-mode"><button data-k="ab" class="on">a &lt; X &lt; b</button><button data-k="lb">X &lt; b</button><button data-k="ga">X &gt; a</button></span></div>
+</div>
+<div class="stat" style="margin-top:10px"><b id="nc-p"></b><small id="nc-z"></small></div>
+<script>
+(() => {
+  const P = window.Plot, $ = id => document.getElementById(id), svg = $('nc-plot');
+  let mode = 'ab';
+  function draw() {
+    const m = +$('nc-m').value, s = Math.max(1e-9, +$('nc-s').value), a = +$('nc-a').value, b = +$('nc-b').value;
+    const za = (a - m) / s, zb = (b - m) / s, lo = mode === 'lb' ? -4 : za, hi = mode === 'ga' ? 4 : zb;
+    const p = mode === 'ab' ? P.Phi(zb) - P.Phi(za) : mode === 'lb' ? P.Phi(zb) : 1 - P.Phi(za);
+    const sx = P.scale(-4, 4, 20, 665), sy = P.scale(0, 0.43, 290, 15), L = Math.max(-4, Math.min(4, lo)), H = Math.max(-4, Math.min(4, hi));
+    svg.replaceChildren();
+    if (H > L) P.el(svg, 'path', {class: 'area', d: P.path(P.phi, L, H, sx, sy) + `L${sx(H)},${sy(0)}L${sx(L)},${sy(0)}Z`, style: 'fill-opacity:.35'});
+    P.el(svg, 'path', {class: 'curve', d: P.path(P.phi, -4, 4, sx, sy)});
+    P.el(svg, 'line', {class: 'axis', x1: 20, x2: 665, y1: sy(0), y2: sy(0)});
+    [-3, -2, -1, 0, 1, 2, 3].forEach(v => {
+      P.el(svg, 'text', {class: 'tick', x: sx(v), y: 312, 'text-anchor': 'middle'}, P.fmt(m + v * s, s < 0.1 ? 2 : s < 1 ? 1 : 0));
+      P.el(svg, 'text', {class: 'tick', x: sx(v), y: 332, 'text-anchor': 'middle', style: 'opacity:.7'}, 'z ' + P.fmt(v));
+    });
+    $('nc-p').textContent = 'P = ' + P.fmt(p, 4);
+    $('nc-z').textContent = (mode !== 'lb' ? `z(a) = ${P.fmt(za, 2)}  ` : '') + (mode !== 'ga' ? `z(b) = ${P.fmt(zb, 2)}` : '');
+  }
+  ['nc-m', 'nc-s', 'nc-a', 'nc-b'].forEach(id => $(id).oninput = draw);
+  P.seg('nc-mode', ds => { mode = ds.k; draw(); });
+  P.seg('nc-pre', ds => { $('nc-m').value = ds.m; $('nc-s').value = ds.s; $('nc-a').value = ds.a; $('nc-b').value = ds.b; draw(); });
+  draw();
+})();
+</script></div></div></section><section class="smaller"><h2>Példa: kenyerek tömege</h2><p>A 2 kg-os kenyerek tömege <math><mi>X</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mn>2</mn><mo>;</mo><mspace width="0.25em"></mspace><msup><mn>0,03</mn><mn>2</mn></msup><mo>)</mo></math> kg. Standardizálás: <math><mi>Z</mi><mo>=</mo><mo>(</mo><mi>X</mi><mo>−</mo><mn>2</mn><mo>)</mo><mo>/</mo><mn>0,03</mn></math>.</p><p>a) <math><mi>P</mi><mo>(</mo><mi>X</mi><mo>&lt;</mo><mn>1,95</mn><mo>)</mo><mo>=</mo><mi>P</mi><mrow><mo stretchy="true">(</mo><mi>Z</mi><mo>&lt;</mo><mfrac><mrow><mn>1,95</mn><mo>−</mo><mn>2</mn></mrow><mrow><mn>0,03</mn></mrow></mfrac><mo stretchy="true">)</mo></mrow><mo>=</mo><mi>P</mi><mo>(</mo><mi>Z</mi><mo>&lt;</mo><mo>−</mo><mn>1,67</mn><mo>)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mi mathvariant="normal">Φ</mi><mo>(</mo><mn>1,67</mn><mo>)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mn>0,9525</mn><mo>=</mo><mn>0,0475</mn></math></p><p>b) <math><mi>P</mi><mo>(</mo><mi>X</mi><mo>&gt;</mo><mn>1,98</mn><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><mi>Z</mi><mo>&gt;</mo><mo>−</mo><mn>0,67</mn><mo>)</mo><mo>=</mo><mi mathvariant="normal">Φ</mi><mo>(</mo><mn>0,67</mn><mo>)</mo><mo>=</mo><mn>0,7486</mn></math></p><p>c) Milyen, 2 kg-ra szimmetrikus határok közé esik a kenyerek 90%-a? <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo>&gt;</mo><mi>v</mi><mo>)</mo><mo>=</mo><mn>0,05</mn></math>-ből <math><mi>v</mi><mo>=</mo><mn>1,645</mn></math>, így <math><mi>h</mi><mo>=</mo><mn>1,645</mn><mo>·</mo><mn>0,03</mn><mo>≈</mo><mn>0,049</mn></math> kg: a kenyerek kb. 90%-a <strong>1,951 és 2,049 kg</strong> közé esik.</p><div class="callout callout-note"><p class="callout-title">Megjegyzés</p><p>A táblázat kerekített z-értékekkel dolgozik; kalkulátorral pontosan: a) <math><mn>0,0478</mn></math>, b) <math><mn>0,7475</mn></math>.</p></div></section><section class="part"><h1>Mintaátlag és centrális határeloszlás-tétel</h1></section><section><h2>A minta mint valószínűségi változók együttese</h2><ul><li><strong><math><mi>n</mi></math> elemű minta:</strong> <math><mi>n</mi></math> darab <strong>azonos eloszlású</strong>, egymástól <strong>független</strong> valószínűségi változó: <math><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><msub><mi>X</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>X</mi><mi>n</mi></msub></math></li><li>Mindegyik <math><msub><mi>X</mi><mi>i</mi></msub></math> eloszlása (várható értéke, szórása) megegyezik a populációban megfigyelt <math><mi>X</mi></math> változóéval</li><li><strong>Statisztika:</strong> a mintaelemek függvénye – így maga is valószínűségi változó. Például a <strong>mintaátlag</strong>:</li></ul><math display="block"><mover accent="true"><mrow><mi>X</mi></mrow><mo>¯</mo></mover><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></munderover><msub><mi>X</mi><mi>i</mi></msub></math><p>Ezért van <strong>eloszlása</strong> a mintaátlagnak, a szórásnak, a mediánnak is: mintáról mintára ingadoznak.</p></section><section><h2>A mintaátlag eloszlása</h2><p>Ha a populáció várható értéke <math><mi>μ</mi></math>, szórása <math><mi>σ</mi></math>, akkor</p><math display="block"><mi>M</mi><mo>(</mo><mover accent="true"><mrow><mi>X</mi></mrow><mo>¯</mo></mover><mo>)</mo><mo>=</mo><mi>μ</mi><mo>,</mo><mspace width="2em"></mspace><mi>D</mi><mo>(</mo><mover accent="true"><mrow><mi>X</mi></mrow><mo>¯</mo></mover><mo>)</mo><mo>=</mo><mfrac><mrow><mi>σ</mi></mrow><mrow><msqrt><mrow><mi>n</mi></mrow></msqrt></mrow></mfrac></math><ul><li>A mintaátlag <strong>torzítatlanul</strong> becsüli <math><mi>μ</mi></math>-t</li><li>Szórása – az <strong>átlag standard hibája</strong> – a mintanagyság négyzetgyökével csökken</li><li>Minél nagyobb <math><mi>n</mi></math>, a mintaátlag eloszlása annál inkább hasonlít a <strong>normális eloszláshoz</strong> – akkor is, ha a populáció nem normális</li></ul></section><section><h2>Centrális határeloszlás-tétel</h2><p><strong>Független</strong>, azonos eloszlású valószínűségi változók összege – és így átlaga is – a tagok számának növekedésével <strong>normális eloszláshoz</strong> tart <span class="cite">(Fischer, 2011)</span>:</p><math display="block"><mover accent="true"><mrow><mi>X</mi></mrow><mo>¯</mo></mover><mo>≈</mo><mi>N</mi><mrow><mo stretchy="true">(</mo><mi>μ</mi><mo>,</mo><mspace width="0.25em"></mspace><mfrac><mrow><msup><mi>σ</mi><mn>2</mn></msup></mrow><mrow><mi>n</mi></mrow></mfrac><mo stretchy="true">)</mo></mrow><mspace width="1em"></mspace><mtext>elég nagy </mtext><mi>n</mi><mtext> esetén</mtext></math><ul><li>Ezért közelíthető sok jelenség normális eloszlással: sok független hatás <strong>eredője</strong> (pl. mérési hiba, biológiai jellemzők)</li><li>Hagyományos ökölszabály: <math><mi>n</mi><mo>≥</mo><mn>30</mn></math> – erősen ferde vagy nehéz farkú populációnál ennél <strong>jóval nagyobb</strong> minta kellhet <span class="cite">(Wilcox, 2017)</span></li></ul></section><section><h2>Próbálja ki: centrális határeloszlás-tétel</h2><div class="columns"><div class="column" style="width:62%"><div class="widget"><svg id="ct-plot" viewBox="0 0 720 420" role="img" aria-label="Populáció eloszlása és a mintaátlagok hisztogramja"></svg></div></div><div class="column" style="width:38%"><div class="controls" style="gap:10px">
+  <div class="grid" id="ct-pop" style="--cols:2;gap:6px">
+    <button class="btn on" data-p="norm">normális</button><button class="btn" data-p="exp">jobbra ferde</button>
+    <button class="btn" data-p="unif">egyenletes</button><button class="btn" data-p="bim">kétcsúcsú</button>
+  </div>
+  <label><span>Mintanagyság: n = <output id="ct-n-o"></output></span><input id="ct-n" type="range" min="1" max="50" step="1" value="1"></label>
+  <div><button class="btn" id="ct-new">Új 3000 minta</button></div>
+</div>
+<div class="stats">
+  <div class="stat"><b id="ct-se"></b><small>σ/√n (elméleti standard hiba)</small></div>
+  <div class="stat"><b id="ct-emp"></b><small>az átlagok tényleges szórása</small></div>
+</div>
+<p style="font-size:18px;margin-top:8px">Fent a populáció, lent 3000 mintaátlag hisztogramja és az N(μ, σ²/n) közelítés.</p>
+<script>
+(() => {
+  const P = window.Plot, $ = id => document.getElementById(id), svg = $('ct-plot');
+  const rn = () => Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(2 * Math.PI * Math.random());
+  const pops = {
+    norm: {m: 0, s: 1, r: [-4, 4], f: P.phi, g: rn},
+    exp: {m: 1, s: 1, r: [-0.3, 6], f: x => x < 0 ? 0 : Math.exp(-x), g: () => -Math.log(1 - Math.random())},
+    unif: {m: 0.5, s: Math.sqrt(1 / 12), r: [-0.2, 1.2], f: x => x >= 0 && x <= 1 ? 1 : 0, g: Math.random},
+    bim: {m: 2.1, s: Math.sqrt(0.49 + 4), r: [-2, 6.2], f: x => 0.5 * (P.phi((x - 0.1) / 0.7) + P.phi((x - 4.1) / 0.7)) / 0.7, g: () => (Math.random() < 0.5 ? 0.1 : 4.1) + 0.7 * rn()}
+  };
+  let pop = pops.norm;
+  function draw() {
+    const n = +$('ct-n').value, [a, b] = pop.r, sx = P.scale(a, b, 40, 705), B = 60, bw = (b - a) / B;
+    const bins = new Array(B).fill(0), means = [];
+    for (let j = 0; j < 3000; j++) {
+      let s = 0;
+      for (let i = 0; i < n; i++) s += pop.g();
+      const m = s / n, k = Math.floor((m - a) / bw);
+      means.push(m);
+      if (k >= 0 && k < B) bins[k]++;
+    }
+    const se = pop.s / Math.sqrt(n), mm = means.reduce((x, y) => x + y) / 3000;
+    const emp = Math.sqrt(means.reduce((x, y) => x + (y - mm) ** 2, 0) / 2999);
+    svg.replaceChildren();
+    // populáció (felső panel)
+    const fmax = Math.max(...Array.from({length: 200}, (_, i) => pop.f(a + (b - a) * i / 199))) * 1.1, sy1 = P.scale(0, fmax, 120, 18);
+    P.el(svg, 'text', {class: 'label', x: 40, y: 14}, 'populáció');
+    P.el(svg, 'path', {class: 'area', d: P.path(pop.f, a, b, sx, sy1, 400) + `L${sx(b)},${sy1(0)}L${sx(a)},${sy1(0)}Z`});
+    P.el(svg, 'path', {class: 'curve', d: P.path(pop.f, a, b, sx, sy1, 400), style: 'stroke-width:2.5'});
+    P.el(svg, 'line', {class: 'axis', x1: 40, x2: 705, y1: sy1(0), y2: sy1(0)});
+    // mintaátlagok (alsó panel), sűrűségskálán
+    const dens = bins.map(c => c / (3000 * bw)), nd = x => P.phi((x - pop.m) / se) / se;
+    const ymax = Math.max(...dens, nd(pop.m)) * 1.08, sy2 = P.scale(0, ymax, 385, 150);
+    P.el(svg, 'text', {class: 'label', x: 40, y: 146}, `${n} elemű minták átlagai`);
+    dens.forEach((d, k) => { if (d) P.el(svg, 'rect', {class: 'bar', x: sx(a + k * bw) + 0.5, width: Math.max(1, sx(a + bw) - sx(a) - 1), y: sy2(d), height: sy2(0) - sy2(d)}); });
+    P.el(svg, 'path', {d: P.path(nd, a, b, sx, sy2, 400), style: 'fill:none;stroke:var(--accent-2);stroke-width:3'});
+    P.el(svg, 'line', {class: 'axis', x1: 40, x2: 705, y1: sy2(0), y2: sy2(0)});
+    const step = (b - a) > 5 ? 1 : 0.2;
+    for (let t = Math.ceil(a / step) * step; t <= b + 1e-9; t += step) P.el(svg, 'text', {class: 'tick', x: sx(t), y: 408, 'text-anchor': 'middle'}, P.fmt(t, step < 1 ? 1 : 0));
+    $('ct-n-o').value = n;
+    $('ct-se').textContent = P.fmt(se, 3);
+    $('ct-emp').textContent = P.fmt(emp, 3);
+  }
+  $('ct-n').oninput = $('ct-new').onclick = draw;
+  P.seg('ct-pop', ds => { pop = pops[ds.p]; draw(); });
+  draw();
+})();
+</script></div></div><aside class="notes"><p>Kezdjük n = 1-gyel (a mintaátlag eloszlása maga a populáció), majd növeljük: a kétcsúcsú és a ferde populációnál is kialakul a haranggörbe, és a hisztogram szűkül (σ/√n). A ferde populációnál kis n mellett még látszik a ferdeség.</p></aside></section><section><h2>Kitekintés: statisztikai eloszlások</h2><p>A hipotézisvizsgálatokban a normális eloszlásból <strong>származtatott</strong> eloszlásokat használjuk:</p><table><caption>Ezek részletes tárgyalása a következő témákban következik.</caption><thead><tr><th>Eloszlás</th><th>Honnan származik?</th><th>Mire használjuk?</th></tr></thead><tbody><tr><td><math><mi>t</mi></math>-eloszlás</td><td>standardizált átlag <strong>becsült</strong> szórással</td><td>átlagok összehasonlítása kis mintán <span class="cite">(Student, 1908)</span></td></tr><tr><td><math><msup><mi>χ</mi><mn>2</mn></msup></math>-eloszlás</td><td>standard normális változók négyzetösszege</td><td>gyakoriságok elemzése, illeszkedésvizsgálat</td></tr><tr><td><math><mi>F</mi></math>-eloszlás</td><td>két <math><msup><mi>χ</mi><mn>2</mn></msup></math> változó (normált) hányadosa</td><td>varianciaelemzés (ANOVA)</td></tr></tbody></table></section><section class="inverse center"><h2>Összefoglalás</h2><ul><li>A <strong>valószínűségi változó</strong> számot rendel a kimenetelekhez; <strong>eloszlása</strong> írja le</li><li><strong>Várható érték</strong> = súlyozott átlag, <strong>szórás</strong> = tipikus eltérés; <math><mi>Z</mi><mo>=</mo><mo>(</mo><mi>X</mi><mo>−</mo><mi>μ</mi><mo>)</mo><mo>/</mo><mi>σ</mi></math></li><li><strong>Binomiális:</strong> sikerek száma <math><mi>n</mi></math> független kísérletben; <strong>Poisson:</strong> ritka események száma</li><li><strong>Normális:</strong> szimmetrikus haranggörbe; 68–95–99,7%-os szabály; táblázat helyett program</li><li><strong>Centrális határeloszlás-tétel:</strong> a mintaátlag eloszlása közel normális, szórása <math><mi>σ</mi><mo>/</mo><msqrt><mrow><mi>n</mi></mrow></msqrt></math></li></ul></section><section class="smaller"><h2>Irodalom</h2><div class="refs"><p>Blanca, M. J., Arnau, J., López-Montiel, D., Bono, R., &amp; Bendayan, R. (2013). Skewness and kurtosis in real data samples. <em>Methodology, 9</em>(2), 78–84. https://doi.org/10.1027/1614-2241/a000057</p><p>Fischer, H. (2011). <em>A history of the central limit theorem: From classical to modern probability theory.</em> Springer.</p><p>Gauss, C. F. (1809). <em>Theoria motus corporum coelestium in sectionibus conicis solem ambientium.</em> Perthes &amp; Besser.</p><p>Micceri, T. (1989). The unicorn, the normal curve, and other improbable creatures. <em>Psychological Bulletin, 105</em>(1), 156–166. https://doi.org/10.1037/0033-2909.105.1.156</p><p>Poisson, S. D. (1837). <em>Recherches sur la probabilité des jugements en matière criminelle et en matière civile.</em> Bachelier.</p><p>Student. (1908). The probable error of a mean. <em>Biometrika, 6</em>(1), 1–25.</p><p>Wilcox, R. R. (2017). <em>Introduction to robust estimation and hypothesis testing</em> (4th ed.). Academic Press.</p><p><strong>Magyar nyelvű tankönyv:</strong> Vargha A. (2000). <em>Matematikai statisztika pszichológiai, nyelvészeti és biológiai alkalmazásokkal.</em> Pólya Kiadó.</p></div></section><footer>Matematikai alapok · 6. Valószínűségi változók és eloszlások</footer></div><div class="progress"><i></i></div><nav class="ctl"><button class="prev" aria-label="Előző">‹</button><span class="num"></span><button class="next" aria-label="Következő">›</button></nav><script>(()=>{const d=document,b=d.body,deck=d.querySelector('.deck'),S=[...deck.querySelectorAll(':scope>section')],
+bar=d.querySelector('.progress i'),num=d.querySelector('.num');let c=-1;
+const fit=()=>deck.style.transform=`translate(-50%,-50%) scale(${Math.min(innerWidth/1280,innerHeight/720)})`;
+const F=s=>[...s.querySelectorAll('.fragment')];
+function go(n,back){n=Math.max(0,Math.min(S.length-1,n|0));if(n===c)return;c=n;
+S.forEach((s,i)=>{s.classList.toggle('past',i<n);s.classList.toggle('present',i==n);s.classList.toggle('future',i>n)});
+const s=S[n],bg=getComputedStyle(s).backgroundColor;F(s).forEach(f=>f.classList.toggle('visible',!!back));
+b.style.backgroundColor=/^rgba\(.*, 0\)$|transparent/.test(bg)?'':bg;
+bar.style.width=(S.length>1?n/(S.length-1)*100:100)+'%';num.textContent=n+1+' / '+S.length;
+history.replaceState(null,'','#/'+(n+1));s.dispatchEvent(new Event('slideenter',{bubbles:true}))}
+function next(){const f=F(S[c]).find(f=>!f.classList.contains('visible'));f?f.classList.add('visible'):go(c+1)}
+function prev(){const f=F(S[c]).filter(f=>f.classList.contains('visible')).pop();f?f.classList.remove('visible'):go(c-1,1)}
+d.addEventListener('keydown',e=>{const t=e.target,k=e.key;
+if(e.ctrlKey||e.metaKey||e.altKey||t.closest('input,textarea,select,[contenteditable]')&&k!='Escape'||t.closest('button')&&(k==' '||k=='Enter'))return;
+if(['ArrowRight','ArrowDown','PageDown',' '].includes(k))next();
+else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(k))prev();
+else if(k=='Home')go(0);else if(k=='End')go(S.length-1);
+else if(k=='f')d.fullscreenElement?d.exitFullscreen():d.documentElement.requestFullscreen();
+else if(k=='n'||k=='s')b.classList.toggle('show-notes');
+else if(k=='Escape')t.blur&&t.blur();else return;e.preventDefault()});
+d.querySelector('.next').onclick=e=>{next();e.currentTarget.blur()};
+d.querySelector('.prev').onclick=e=>{prev();e.currentTarget.blur()};
+let x0=null;deck.addEventListener('pointerdown',e=>{x0=e.pointerType=='touch'&&!e.target.closest('input')?e.clientX:null});
+deck.addEventListener('pointerup',e=>{if(x0==null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>50)dx<0?next():prev()});
+const h=()=>+(/\d+/.exec(location.hash)||[1])[0]-1;
+addEventListener('resize',fit);addEventListener('hashchange',()=>go(h()));fit();go(h())})();</script></html>
